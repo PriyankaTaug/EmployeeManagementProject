@@ -113,63 +113,36 @@
         <nav>
             <a href="#" class="home" style="color:black;text-align: left;">{{usename}}</a>
             <ul>
-                <li><a href="#" class="btn btn-primary" id="addEmployeeBtn">Add Employee</a></li>
-                <form action="{% url 'EmployeeManagementapp:LogoutPage' %}" method="post" style="display: inline;">
-    {% csrf_token %}
-    <button type="submit" style="border: none; background: none; cursor: pointer;">
-        Logout
-    </button>
-</form>
-
+                <li><a href="#" class="btn btn-primary" id="addEmployeeBtn">Change Password</a></li>
+                <form action="{% url 'EmployeeManagementapp:EmplopyeeLogoutPage' %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="border: none; background: none; cursor: pointer;">
+                        Logout
+                    </button>
+                </form>
+                
             </ul>
         </nav>
-        <h1 class="admin-dashboard mt-5">Admin Dashboard</h1>
+        <h1 class="admin-dashboard mt-5">Employee Dashboard</h1>
 
-        <div class="card mt-4">
-            <h4 class="text-data">Total No of Employees: {{total_employee}}</h4>
-        </div>
+       
 
         <!-- Table Container -->
         <div class="table-container">
-            <div class="table-responsive" style="width:100%;background-color:white;">
-                <table id="example" class="display table table-bordered mt-4" style="background-color:white;table-layout: auto;">
-                    <thead>
-                        <tr>
-                            <th style="white-space:nowrap;">SNo</th>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Email</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for i in employee_data %}
-                        <tr>
-                            <td>{{i.id}}</td>
-                            <td>{{i.name}}</td>
-                            <td>{{i.phonenumber}}</td>
-                            <td>{{i.email}}</td>
-                            <td>
-                                <a href="{% url 'EmployeeManagementapp:EmployeeEdit' i.id %}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                    </svg>
-                                </a>
-                                
-                                <a href="#" onclick="deleteEmployee('{{ i.id }}')" class="delete-btn">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
-                                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
-                                    </svg>
-                                </a>
-                                
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+            <form id="employeeForm" method="POST" action="">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required  value="{{employee_val.name}}">
+                </div>
+                <div class="mb-3">
+                    <label for="phonenumber" class="form-label">Phone Number</label>
+                    <input type="tel" class="form-control" id="phonenumber" name="phonenumber" required value="{{employee_val.phonenumber}}">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required value="{{employee_val.email}}">
+                </div>
+            </form>
         </div>
 <script>
     function deleteEmployee(employeeId) {
@@ -216,69 +189,8 @@ function getCookie(name) {
         <div class="form-container">
             <h2 style="text-align: center;">Add New Employee</h2>
             <!-- Trigger/Open The Modal -->
-<button id="myBtn" class="btn btn-primary">Add new Field</button>
-
 <!-- The Modal -->
-<div id="myModal" class="modal">
 
-  <!-- Modal content -->
-  <form id="newFieldForm">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h1>New Field</h1>
-      <input type="text" id="fieldName" name="fieldname" placeholder="Field Name" class="form-controls" required>
-      <select id="fieldType" name="typename" class="form-controls mt-3" required>
-          <option value="">Select Type</option>
-          <option value="VARCHAR(255)">VARCHAR</option>
-          <option value="INT">INT</option>
-          <option value="DATE">DATE</option>
-          <!-- Add more types as needed -->
-      </select>
-      <input type="text" id="maxLength" name="max_length" placeholder="Max Length" class="form-controls" required>
-      <input type="text" id="placeholder" name="placeholder" placeholder="Placeholder" class="form-controls" required>
-      <input type="submit" class="btn btn-primary mt-3" value="Add Field">
-    </div>
-  </form>
-  
-  <script>
-      document.getElementById("newFieldForm").onsubmit = function(event) {
-          event.preventDefault(); // Prevent the default form submission
-  
-          const formData = new FormData(this); // Collect form data
-  
-          fetch('/AddNewTab/', { // Update this to your actual endpoint
-              method: 'POST',
-              headers: {
-                  'X-CSRFToken': getCookie('csrftoken'), // CSRF protection
-              },
-              body: formData // Send form data
-          })
-          .then(response => response.text())
-          .then(data => {
-              alert(data); // Handle the response from the server
-              // Optionally, close the modal
-              document.getElementById("myModal").style.display = "none";
-          })
-          .catch(error => console.error('Error:', error));
-      };
-  
-      function getCookie(name) {
-          let cookieValue = null;
-          if (document.cookie && document.cookie !== '') {
-              const cookies = document.cookie.split(';');
-              for (let i = 0; i < cookies.length; i++) {
-                  const cookie = cookies[i].trim();
-                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                      break;
-                  }
-              }
-          }
-          return cookieValue;
-      }
-  </script>
-  
-</div>
 
 <script>
 // Get the modal
@@ -308,28 +220,18 @@ window.onclick = function(event) {
 }
 </script>
 
-            <form id="employeeForm" method="POST" action="{% url 'EmployeeManagementapp:EmployeeRegisteration' %}">
+            <form id="employeeForm" method="POST" action="{% url 'EmployeeManagementapp:changePassword' %}">
                 {% csrf_token %}
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
-                </div>
+                <input type="text" hidden class="form-control" id="name" name="id" required  value="{{employee_val.id}}">
                 <div class="mb-3">
                     <label for="phonenumber" class="form-label">Phone Number</label>
-                    <input type="tel" class="form-control" id="phonenumber" name="phonenumber" required>
+                    <input type="password" class="form-control" id="phonenumber" name="npassword" required placeholder="Enter new password">
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <input type="password" class="form-control" id="email" name="cnpassword" required placeholder="Confirm new password">
                 </div>
-                <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" required>
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
-                </div>
+                
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
             </form>
